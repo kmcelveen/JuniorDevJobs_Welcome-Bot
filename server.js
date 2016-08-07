@@ -7,43 +7,27 @@ var SlackBot = require('slackbots');
 
 // create a bot
 var bot = new SlackBot({
-  token: apiKey.SLACK_API_KEY,
-  name: 'jrdevjobs_welcome-bot'
+  token: apiKey.SLACK_API_KEY_TEST,
+  name: 'welcomebot'
 });
 
-// bot.on('start', function() {
-//   // more information about additional params https://api.slack.com/methods/chat.postMessage
-//
-// });
+
+bot.on('start', function() {
+  console.log('i started');
+});
+
 
 bot.on('message', function(data) {
-  // all ingoing events https://api.slack.com/rtm
 
-  // console.log('message event fired', data);
+  console.log('message event fired', data.type);
+  if(data.type === 'team_join'){
+    console.log("Someone joined the team", data);
 
-  if (data.channel === 'G1YSWB1DK') {
-    // console.log('heyyy');
+    console.log('***************** this is the users name', data.user.name);
 
-    var allUsers = bot.getUsers();
-    var user = allUsers._value.members.filter(function(val) {
-      return val.id === data.user ? val.name : null;
-    });
-    // var introChannel = bot.getChannelId('introductions');
-    // console.log('the channel', introChannel)
-
-    // console.log("this is the user", user);
-    bot.postMessageToChannel('Enter Channel', 'Welcome @' + user[0].name + ' to Junior Dev Jobs Slack group. Head over to the #introductions channel to introduce yourself to the group. Tells us where you are located, your expertise and what you are currently working on.', {
-      as_user: true
-    });
+    bot.postMessageToChannel('general', 'Welcome @'+ data.user.name + ' to the Junior Dev Jobs community! Go to the introductions channel and tell us about yourself! 1. Name 2. Location 3. Expertise', { as_user: true});
   }
 });
-
-
-// bot.on('team_join', function(data) {
-//   console.log("someone joined", data);
-//
-// });
-
 
 
 

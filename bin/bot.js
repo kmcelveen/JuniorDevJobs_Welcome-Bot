@@ -1,6 +1,6 @@
 'use strict';
 
-var WelcomeBot = require('../lib/welcomebot.js');
+var WelcomeBot = require('../libs/welcomebot.js');
 
 var token = process.env.BOT_API_KEY;
 var name = process.env.BOT_NAME;
